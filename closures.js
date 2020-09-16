@@ -21,14 +21,10 @@ function outer() {
   Above you're given a function that returns another function which has a closure over the name variable.
   Invoke outer saving the return value into another variable called 'inner'.
 */
-  
-// Code Here
-
-
 
 //Once you do that, invoke inner.
-
-//Code Here
+const inner = outer();
+inner();
 
 
 
@@ -51,7 +47,9 @@ function callFriend(name) {
   (HINT: You will need to pass in arguments to both function invocations)
 */
 
-//Code Here
+const callJake = callFriend('Jake');
+
+
 
 
 
@@ -61,16 +59,32 @@ function callFriend(name) {
   Write a function called makeCounter that makes the following code work properly.
 */
 
-//Code Here
+function makeCounter() {
+  let count = 0;
 
+  return function() {
+    count += 1;
+    return count;
+  }
+}
 
+// function makeCounter() {
+//   let count = 0;
+
+//   function increaseThatNum() {
+//     count = count + 1;
+//     return count;
+//   }
+
+//   return increaseThatNum;
+// }
 
 //Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
 
 
 
@@ -86,18 +100,25 @@ function callFriend(name) {
 */
 
 function counterFactory(value) {
-  // Code here.
+  let count = value
 
   return {
-
+    inc: function() {
+      count += 1;
+      return count;
+    },
+    dec: function() {
+      count -= 1;
+      return count;
+    }
   };
 }
 
 counter = counterFactory(10);
-// counter.inc() // 11
-// counter.inc() // 12
-// counter.inc() // 13
-// counter.dec() // 12
+counter.inc() // 11
+counter.inc() // 12
+counter.inc() // 13
+counter.dec() // 12
 
 
 
@@ -112,10 +133,12 @@ counter = counterFactory(10);
 function motivation( firstname, lastname ) {
   var welcomeText = "You're doing awesome, keep it up";
 
-  // code message function here.
+  function message() {
+    return `${welcomeText} ${firstname} ${lastname}.`
+  }
 
-  //Uncommment this to return the value of your message function
-  //return message;
+
+  return message;
 }
 
 var greeting = motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
@@ -143,9 +166,13 @@ var module = (function() {
   // Anything that is being returned is made public and can be invoked from
   // outside our lexical scope
   return {
-    // Code here.
+    publicMethod: function() {
+      return privateMethod();
+    }
   };
 })();
+privateMethod();
+module.publicMethod();
 
 
 
@@ -162,7 +189,14 @@ function secretNumber() {
   var secret = 143;
 
   return {
-    // Code here
+    addToSecret: function(num) {
+      secret += num;
+      return secret;
+    },
+    takeAwayFromSecret: function(num) {
+      secret -= num;
+      return secret;
+    }
   };
 }
 
@@ -173,7 +207,7 @@ function secretNumber() {
 /*
   Here we have a for loop that will iterate as long as i is less than or equal to 5.
   What we need to do is console.log(i) so that it logs like so:
-    0 second after call - log 0
+    0 seconds after call - log 0
     1 seconds after call - log 1
     2 seconds after call - log 2
     3 seconds after call - log 3
@@ -186,11 +220,28 @@ function secretNumber() {
   Fix the code below to log the desired output.
 */
 
+// function timeOutCounter() {
+//   for (let i = 0; i <= 5; i++) {
+//     setTimeout(function() {
+//       console.log(i);
+//     }, i * 1000);
+//   }
+// }
+// timeOutCounter();
+
+
 function timeOutCounter() {
+
   for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
-      console.log(i);
-    }, i * 1000);
+    function theValue(num){
+        setTimeout(function() {
+      console.log(num);
+      }, num * 1000);
+    }
+    theValue(i);
+
+
+
   }
 }
 timeOutCounter();
